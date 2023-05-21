@@ -18,7 +18,7 @@ public class Rand_SpawnPool : SpawnPool
 
         Collider col = go.GetComponent<Collider>();        
         col.enabled = false;
-        GameManager.Instance.Key = go;
+        Managers.Game.Key = go;
 
         while (true)
         {

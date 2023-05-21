@@ -15,7 +15,7 @@ public abstract class SpawnPool : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.Instance.Key == null)
+        if (Managers.Game.Key == null)
         {
             currentTime += Time.deltaTime;
 

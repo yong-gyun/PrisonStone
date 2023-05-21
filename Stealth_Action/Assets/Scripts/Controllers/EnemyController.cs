@@ -25,7 +25,7 @@ public class EnemyController : BaseController
 
         playerFindAngle = 60f;
         playerFindRange = 6f;
-        GameManager.Instance.EnemyList.Add(this);
+        Managers.Game.EnemyList.Add(this);
     }
 
     protected override void Update()
@@ -51,9 +51,9 @@ public class EnemyController : BaseController
 
     protected override void UpdateMove()
     {
-        if (GameManager.Instance.Player != null)
+        if (Managers.Game.Player != null)
         {
-            Vector3 interval = (GameManager.Instance.Player.transform.position - transform.position);
+            Vector3 interval = (Managers.Game.Player.transform.position - transform.position);
             
             if (interval.magnitude <= playerFindRange)
             {
@@ -67,9 +67,9 @@ public class EnemyController : BaseController
             }
         }
 
-        if (GameManager.Instance.Key != null)
+        if (Managers.Game.Key != null)
         {
-            Vector3 interval = (GameManager.Instance.Key.transform.position - transform.position);
+            Vector3 interval = (Managers.Game.Key.transform.position - transform.position);
 
             float keyFindRange = 5f;
             float keyFindAngle = 140f;
@@ -98,12 +98,12 @@ public class EnemyController : BaseController
 
     void UpdateFind()
     {
-        target = GameManager.Instance.Key.transform;
+        target = Managers.Game.Key.transform;
     }
 
     void UpdateFollow()
     {
-        target = GameManager.Instance.Player.transform;
+        target = Managers.Game.Player.transform;
         Vector3 dir = target.position - transform.position;
         dir.y = 0;
 

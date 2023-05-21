@@ -11,7 +11,7 @@ public class UI_Count : MonoBehaviour
     private void Start()
     {
         countText = transform.Find("CountText").GetComponent<TMP_Text>();
-        player = GameManager.Instance.Player.GetComponent<PlayerController>();
+        player = Managers.Game.Player.GetComponent<PlayerController>();
     }
 
     private void Update()

@@ -36,10 +36,10 @@ public class CCTV : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Instance.Player == null)
+        if (Managers.Game.Player == null)
             return;
 
-        Vector3 interval = GameManager.Instance.Player.transform.position - _findPoint.position;
+        Vector3 interval = Managers.Game.Player.transform.position - _findPoint.position;
         interval.y = 0;
         float distance = interval.magnitude; 
 
@@ -55,13 +55,13 @@ public class CCTV : MonoBehaviour
 
                 if(Physics.Raycast(transform.position, interval.normalized, out hit, _findRadius))
                 {
-                    if (!GameManager.Instance.EnemyList[0].IsWarining)
+                    if (!Managers.Game.EnemyList[0].IsWarining)
                     {
                         Instantiate(Resources.Load<GameObject>("Prefabs/UI_Warning"));
 
-                        for (int i = 0; i < GameManager.Instance.EnemyList.Count; i++)
+                        for (int i = 0; i < Managers.Game.EnemyList.Count; i++)
                         {
-                            GameManager.Instance.EnemyList[i].OnWarning(10);
+                            Managers.Game.EnemyList[i].OnWarning(10);
                         }
                     }
 
