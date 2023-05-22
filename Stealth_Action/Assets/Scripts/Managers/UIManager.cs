@@ -84,6 +84,9 @@ public class UIManager
         if (go == null)
             return null;
 
+        Canvas canvas = go.GetOrAddComponent<Canvas>();
+        canvas.worldCamera = Camera.main;
+
         T worldSpaceUI = go.GetOrAddComponent<T>();
         worldSpaceUI.transform.SetParent(_root);
 

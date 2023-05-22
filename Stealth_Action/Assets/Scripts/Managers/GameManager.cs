@@ -6,6 +6,12 @@ public struct Item
 {
     public Define.CardKey Type;
     public int Count;
+
+    public Item(Define.CardKey type, int count)
+    {
+        Type = type;
+        Count = count;
+    }
 }
 
 public class GameManager
@@ -18,6 +24,15 @@ public class GameManager
 
         return _player; 
     }
-    public GameObject Key;
+
     public List<EnemyController> EnemyList = new List<EnemyController>();
+    public List<Item> KeyInventory = new List<Item>();
+
+    public void Init()
+    {
+        for (int i = 0; i < (int) Define.CardKey.MaxCount; i++)
+        {
+            KeyInventory.Add(new Item((Define.CardKey) i, 0));
+        }
+    }
 }

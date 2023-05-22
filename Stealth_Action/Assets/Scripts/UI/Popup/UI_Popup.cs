@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class UI_Popup : UI_Base
 {
-    void Start()
-    {
-        Init();
-    }
-
     protected override void Init()
     {
         Managers.UI.SetCanvas(gameObject, true);

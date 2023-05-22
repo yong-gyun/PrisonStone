@@ -24,7 +24,8 @@ public class Define
         Red,
         Yellow,
         Green,
-        Blue
+        Blue,
+        MaxCount
     }
 
     

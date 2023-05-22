@@ -8,6 +8,8 @@ public class Key : MonoBehaviour
     Collider col;
     float _range;
     bool _isView;
+    Vector3 _offset = new Vector3(2, 2.25f, 1);
+    UI_Interaction _interactionUI;
 
     private void Start()
     {
@@ -49,5 +51,15 @@ public class Key : MonoBehaviour
 
             Destroy(gameObject);
         }
+
+        if(other.CompareTag("Player"))
+        {
+            _interactionUI = Managers.UI.MakeWorldSpaceUI<UI_Interaction>();
+        }
+    }
+
+    void GetKey()
+    {
+
     }
 }

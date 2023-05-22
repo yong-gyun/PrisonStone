@@ -67,24 +67,23 @@ public class EnemyController : BaseController
             }
         }
 
-        if (Managers.Game.Key != null)
-        {
-            Vector3 interval = (Managers.Game.Key.transform.position - transform.position);
+        //if (Managers.Game.Key != null)
+        //{
+        //    Vector3 interval = (Managers.Game.Key.transform.position - transform.position);
 
-            float keyFindRange = 5f;
-            float keyFindAngle = 140f;
+        //    float keyFindRange = 5f;
+        //    float keyFindAngle = 140f;
 
-            if (interval.magnitude <= keyFindRange)
-            {
-                float dotProduct = Vector3.Dot(interval.normalized, transform.forward);
+        //    if (interval.magnitude <= keyFindRange)
+        //    {
+        //        float dotProduct = Vector3.Dot(interval.normalized, transform.forward);
 
-                if (keyFindAngle / 2 > dotProduct)
-                {
-                    state = Define.EnemyState.Find;
-                    return;
-                }
-            }
-        }    
+        //        if (keyFindAngle / 2 > dotProduct)
+        //        {
+        //            state = Define.EnemyState.Find;
+        //            return;
+        //        }
+        //    }
 
         target = points[pointIdx % points.Length];
         float distance = (target.position - transform.position).magnitude;
@@ -98,7 +97,7 @@ public class EnemyController : BaseController
 
     void UpdateFind()
     {
-        target = Managers.Game.Key.transform;
+        //target = Managers.Game.Key.transform;
     }
 
     void UpdateFollow()

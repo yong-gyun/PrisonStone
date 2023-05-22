@@ -9,6 +9,11 @@ public abstract class UI_Base : MonoBehaviour
 {
     protected Dictionary<Type, UnityEngine.Object[]> _objects = new Dictionary<Type, UnityEngine.Object[]>();
 
+    void Awake()
+    {
+        Init();
+    }
+
     protected abstract void Init();
 
     protected void Bind<T>(Type type) where T : UnityEngine.Object
@@ -37,7 +42,7 @@ public abstract class UI_Base : MonoBehaviour
     protected void BindInputField(Type type) { Bind<TMP_InputField>(type); }
     protected void BindButton(Type type) { Bind<Button>(type); }
     
-    public T Get<T>(int idx) where T : UnityEngine.Object
+    protected T Get<T>(int idx) where T : UnityEngine.Object
     {
         UnityEngine.Object[] objects = null;
 

@@ -8,8 +8,8 @@ public class Door : MonoBehaviour
     [SerializeField] Define.CardKey _type;
     Collider col;
     Animator anim;
-
-
+    UI_Interaction _interactionUI;
+    Vector3 offset = new Vector3(2.25f, 5, 0);
 
     private void Start()
     {
@@ -42,8 +42,15 @@ public class Door : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            //Show UI
-            Open();
+            _interactionUI = Managers.UI.MakeWorldSpaceUI<UI_Interaction>();
+            _interactionUI.transform.position = offset + transform.position;
+
+            if(Managers.Game.KeyInventory.Count > 0)
+            {
+                
+            }
+
+            _interactionUI.SetInfo("¿­·Á¶ó Âü±ú", false);
         }
     }
 
@@ -51,6 +58,7 @@ public class Door : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Managers.Resource.Destroy(_interactionUI.gameObject);
             StartCoroutine(CoClose());
             //Close UI
         }
