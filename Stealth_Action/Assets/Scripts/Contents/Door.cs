@@ -45,9 +45,8 @@ public class Door : MonoBehaviour
             _interactionUI = Managers.UI.MakeWorldSpaceUI<UI_Interaction>();
             _interactionUI.transform.position = offset + transform.position;
 
-            if (Managers.Game.KeyInventory[_type] > 0)
+            if (Managers.Game.KeyInventory[_type] > 0 || !_needKey)
             {
-
                 _interactionUI.SetInfo("¿­·Á¶ó Âü±ú", false);
                 _interactionUI.OnInteractionHandler += OnOpen;
                 Debug.Log(Managers.Game.KeyInventory[_type]);
