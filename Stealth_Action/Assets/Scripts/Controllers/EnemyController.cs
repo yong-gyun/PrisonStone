@@ -51,21 +51,23 @@ public class EnemyController : BaseController
 
     protected override void UpdateMove()
     {
-        if (Managers.Game.GetPlayer() != null)
-        {
-            Vector3 interval = (Managers.Game.GetPlayer().transform.position - transform.position);
+
+
+        //if (Managers.Game.GetPlayer() != null)
+        //{
+        //    Vector3 interval = (Managers.Game.GetPlayer().transform.position - transform.position);
             
-            if (interval.magnitude <= playerFindRange)
-            {
-                float dotProduct = Vector3.Dot(interval.normalized, transform.forward);
+        //    if (interval.magnitude <= playerFindRange)
+        //    {
+        //        float dotProduct = Vector3.Dot(interval.normalized, transform.forward);
                 
-                if (playerFindAngle / 2 > dotProduct && dotProduct > 0)
-                {
-                    state = Define.EnemyState.Follow;
-                    return;
-                }
-            }
-        }
+        //        if (playerFindAngle / 2 > dotProduct && dotProduct > 0)
+        //        {
+        //            state = Define.EnemyState.Follow;
+        //            return;
+        //        }
+        //    }
+        //}
 
         //if (Managers.Game.Key != null)
         //{

@@ -45,12 +45,16 @@ public class Door : MonoBehaviour
             _interactionUI = Managers.UI.MakeWorldSpaceUI<UI_Interaction>();
             _interactionUI.transform.position = offset + transform.position;
 
-            if(Managers.Game.KeyInventory.Count > 0)
+            if (Managers.Game.KeyInventory[_type] > 0)
             {
-                
+
+                _interactionUI.SetInfo("¿­·Á¶ó Âü±ú", false);
+                _interactionUI.OnInteractionHandler += OnOpen;
+                Debug.Log(Managers.Game.KeyInventory[_type]);
+                return;
             }
 
-            _interactionUI.SetInfo("¿­·Á¶ó Âü±ú", false);
+            _interactionUI.SetInfo("¿­·Á¶ó Âü±ú", true);
         }
     }
 
@@ -60,15 +64,14 @@ public class Door : MonoBehaviour
         {
             Managers.Resource.Destroy(_interactionUI.gameObject);
             StartCoroutine(CoClose());
-            //Close UI
         }
     }
 
-    public void Open()
+    public void OnOpen()
     {
         anim.SetBool("IsOpen", true);
-
-        Debug.Log("Open");
+        Managers.Game.KeyInventory[_type]--;
+        Debug.Log("Check");
     }
 
     IEnumerator CoClose()

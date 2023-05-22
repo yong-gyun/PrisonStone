@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class Key : MonoBehaviour
 {
+    Define.CardKey _type;
     GameObject _player;
     Collider col;
     float _range;
@@ -13,6 +15,26 @@ public class Key : MonoBehaviour
 
     private void Start()
     {
+        switch(gameObject.name)
+        {
+            case "RedCardKey":
+                _type = Define.CardKey.Red;
+                break;
+            case "WhiteCardKey":
+                _type = Define.CardKey.White;
+                break;
+            case "YellowCardKey":
+                _type = Define.CardKey.Yellow;
+                break;
+            case "BlueCardKey":
+                _type = Define.CardKey.Blue;
+                break;
+            case "GreenCardKey":
+                _type = Define.CardKey.Green;
+                break;
+
+        }
+
         _player = Managers.Game.GetPlayer();
         col = GetComponent<Collider>();
     }
@@ -49,17 +71,33 @@ public class Key : MonoBehaviour
                 enemy.state = Define.EnemyState.Move;
             }
 
-            Destroy(gameObject);
+            Managers.Resource.Destroy(gameObject);
+            Managers.Resource.Destroy(_interactionUI.gameObject);
         }
 
         if(other.CompareTag("Player"))
         {
             _interactionUI = Managers.UI.MakeWorldSpaceUI<UI_Interaction>();
+            _interactionUI.transform.position = transform.position + _offset;
+            _interactionUI.SetInfo("»πµÊ«œ±‚");
+
+            _interactionUI.OnInteractionHandler += GetKey;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.CompareTag("Player"))
+        {
+            Managers.Resource.Destroy(_interactionUI.gameObject);
         }
     }
 
     void GetKey()
     {
-
+        Managers.Game.KeyInventory[_type]++;
+        Managers.Resource.Destroy(_interactionUI.gameObject);
+        Managers.Resource.Destroy(gameObject);
+        Debug.Log(_type);
     }
 }

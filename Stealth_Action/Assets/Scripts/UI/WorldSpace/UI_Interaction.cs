@@ -14,11 +14,12 @@ public class UI_Interaction : UI_Base
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.A))
+        if(Input.GetKeyDown(KeyCode.F))
         {
             if (OnInteractionHandler != null)
             {
                 OnInteractionHandler.Invoke();
+                Debug.Log("Check");
             }
         }
     }
@@ -28,11 +29,11 @@ public class UI_Interaction : UI_Base
         BindText(typeof(Texts));
     }
 
-    public void SetInfo(string text, bool openable)
+    public void SetInfo(string text, bool isRed = false)
     {
         GetText((int)Texts.InteractionText).text = text;
 
-        if(!openable)
+        if(isRed)
             GetText((int)Texts.InteractionText).color = Color.red;
     }
 }
