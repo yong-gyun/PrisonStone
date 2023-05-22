@@ -34,4 +34,14 @@ public static class Util
 
         return null;
     }
+
+    public static GameObject FindChild(this GameObject go, string name = null, bool recursive = false)
+    {
+        Transform transform = FindChild<Transform>(go, name, recursive);
+
+        if (transform.gameObject == null)
+            return null;
+
+        return transform.gameObject;
+    }
 }

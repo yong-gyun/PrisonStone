@@ -4,50 +4,65 @@ using UnityEngine;
 
 public class PlayerController : BaseController
 {
-    GameObject originBullet;
-    Transform firePos;
-    float rotSpeed = 30;
-    float currentTime = 0;
+    Animator _anim;
+    Transform _firePos;
+    Rigidbody _rb;
+    float _rotSpeed = 30;
+    float _currentTime = 0;
 
-    public int maxCount = 4;
-    public int currentCount = 0;
-    
+    public int _maxCount { get; private set; } = 4;
+    public int _currentCount { get; private set; }  = 0;
+
     protected override void Init()
     {
-        originBullet = Resources.Load<GameObject>("Prefabs/PlayerBullet");
         moveSpeed = 7.5f;
-        firePos = transform.Find("FirePos");
-        currentCount = maxCount;
+        _firePos = transform.Find("FirePos");
+        _currentCount = _maxCount;
+
+        _rb = GetComponent<Rigidbody>();
+        _anim = GetComponentInChildren<Animator>();
+
     }
 
     protected override void Update()
     {
-        base.Update();
         UpdateAttack();
 
-        if(currentCount < maxCount)
+        if(_currentCount < _maxCount)
         {
-            currentTime += Time.deltaTime;
+            _currentTime += Time.deltaTime;
 
-            if(currentTime >= 4f)
+            if(_currentTime >= 4f)
             {
-                currentTime = 0;
-                currentCount++;
+                _currentTime = 0;
+                _currentCount++;
             }
         }
 
+    }
+
+    private void FixedUpdate()
+    {
+        UpdateMove();
     }
 
     protected override void UpdateMove()
     {
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
-        Vector3 dir = (Vector3.back * horizontal) + (Vector3.right * vertical);
+        Vector3 dir = (Vector3.right * horizontal) + (Vector3.forward * vertical);
 
         if (dir != Vector3.zero)
         {
-            transform.position += dir.normalized * moveSpeed * Time.deltaTime;
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), rotSpeed * Time.deltaTime);
+            _rb.velocity = dir.normalized * moveSpeed;
+            //transform.position += dir.normalized * moveSpeed * Time.deltaTime;
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), _rotSpeed * Time.deltaTime);
+            _anim.SetBool("IsMove", true);
+        }
+        else
+        {
+            _rb.velocity = Vector3.zero;
+            _anim.SetBool("IsMove", false);
         }
     }
 
@@ -61,22 +76,12 @@ public class PlayerController : BaseController
 
     protected override void UpdateAttack()
     {
-        if (currentCount == 0)
+        if (_currentCount == 0)
             return;
 
         if(Input.GetMouseButtonDown(0))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Floor")))
-            {
-                Vector3 dir = hit.point - transform.position;
-                Quaternion qua = Quaternion.LookRotation(dir);
-                transform.rotation = qua;
-            }
-            Instantiate(originBullet, firePos.position, transform.rotation);
-            currentCount--;
+            //∏∂√Î√— πﬂªÁ
         }
     }
 }

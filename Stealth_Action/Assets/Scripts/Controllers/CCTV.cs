@@ -36,10 +36,10 @@ public class CCTV : MonoBehaviour
 
     private void Update()
     {
-        if (Managers.Game.Player == null)
+        if (Managers.Game.GetPlayer() == null)
             return;
 
-        Vector3 interval = Managers.Game.Player.transform.position - _findPoint.position;
+        Vector3 interval = Managers.Game.GetPlayer().transform.position - _findPoint.position;
         interval.y = 0;
         float distance = interval.magnitude; 
 

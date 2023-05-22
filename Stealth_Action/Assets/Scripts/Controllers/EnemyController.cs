@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class EnemyController : BaseController
 {
-    public Define.State state { get; set; }
+    public Define.EnemyState state { get; set; }
     public bool IsWarining { get; private set; }
     NavMeshAgent nma;
     Transform target;
@@ -35,13 +35,13 @@ public class EnemyController : BaseController
 
         switch(state)
         {
-            case Define.State.Move:
+            case Define.EnemyState.Move:
                 UpdateMove();
                 break;
-            case Define.State.Find:
+            case Define.EnemyState.Find:
                 UpdateFind();
                 break;
-            case Define.State.Follow:
+            case Define.EnemyState.Follow:
                 UpdateFollow();
                 break;
         }
@@ -51,9 +51,9 @@ public class EnemyController : BaseController
 
     protected override void UpdateMove()
     {
-        if (Managers.Game.Player != null)
+        if (Managers.Game.GetPlayer() != null)
         {
-            Vector3 interval = (Managers.Game.Player.transform.position - transform.position);
+            Vector3 interval = (Managers.Game.GetPlayer().transform.position - transform.position);
             
             if (interval.magnitude <= playerFindRange)
             {
@@ -61,7 +61,7 @@ public class EnemyController : BaseController
                 
                 if (playerFindAngle / 2 > dotProduct && dotProduct > 0)
                 {
-                    state = Define.State.Follow;
+                    state = Define.EnemyState.Follow;
                     return;
                 }
             }
@@ -80,7 +80,7 @@ public class EnemyController : BaseController
 
                 if (keyFindAngle / 2 > dotProduct)
                 {
-                    state = Define.State.Find;
+                    state = Define.EnemyState.Find;
                     return;
                 }
             }
@@ -103,19 +103,19 @@ public class EnemyController : BaseController
 
     void UpdateFollow()
     {
-        target = Managers.Game.Player.transform;
+        target = Managers.Game.GetPlayer().transform;
         Vector3 dir = target.position - transform.position;
         dir.y = 0;
 
         if (Physics.Raycast(transform.position, dir.normalized, 1f, LayerMask.GetMask("Wall")))
-            state = Define.State.Move;
+            state = Define.EnemyState.Move;
 
         float distance = dir.magnitude;
         NavMeshPath path = new NavMeshPath();
         
         if (distance > 10f || !nma.CalculatePath(target.position, path))
         {
-            state = Define.State.Move;
+            state = Define.EnemyState.Move;
         }
     }
 
@@ -123,7 +123,7 @@ public class EnemyController : BaseController
     {
         if(other.CompareTag("Player"))
         {
-            state = Define.State.Move;
+            state = Define.EnemyState.Move;
             Destroy(other.gameObject);
         }
     }

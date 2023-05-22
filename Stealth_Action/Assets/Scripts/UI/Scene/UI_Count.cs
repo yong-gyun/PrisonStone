@@ -11,11 +11,11 @@ public class UI_Count : MonoBehaviour
     private void Start()
     {
         countText = transform.Find("CountText").GetComponent<TMP_Text>();
-        player = Managers.Game.Player.GetComponent<PlayerController>();
+        player = Managers.Game.GetPlayer().GetComponent<PlayerController>();
     }
 
     private void Update()
     {
-        countText.text = $"{player.currentCount} / {player.maxCount}";
+        countText.text = $"{player._currentCount} / {player._maxCount}";
     }
 }

@@ -11,12 +11,15 @@ public class Key : MonoBehaviour
 
     private void Start()
     {
-        _player = Managers.Game.Player;
+        _player = Managers.Game.GetPlayer();
         col = GetComponent<Collider>();
     }
 
     private void Update()
     {
+        if (Managers.Game.GetPlayer() == null)
+            return;
+
         float distance = (_player.transform.position - transform.position).sqrMagnitude;
 
         if(distance <= _range)
@@ -39,9 +42,9 @@ public class Key : MonoBehaviour
         {
             EnemyController enemy = other.GetComponent<EnemyController>();
 
-            if (enemy.state != Define.State.Follow)
+            if (enemy.state != Define.EnemyState.Follow)
             {
-                enemy.state = Define.State.Move;
+                enemy.state = Define.EnemyState.Move;
             }
 
             Destroy(gameObject);
