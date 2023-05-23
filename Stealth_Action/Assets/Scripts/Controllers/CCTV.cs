@@ -7,13 +7,12 @@ public class CCTV : MonoBehaviour
 {
     MeshFilter _meshFilter;
     Mesh _mesh;
-    List<Vector3> _points = new List<Vector3>();
+    [SerializeField] List<Vector3> _points = new List<Vector3>();
     Transform _findPoint;
     public float Radius { get { return _findRadius; } }
     public float Angle { get { return _findAngle; } }
 
     float _findRadius = 5f;
-    float _height = 7.5f;
     float _findAngle = 75f;
     float _rotRange = 40f;
     float _rotSpeed = 0.25f;

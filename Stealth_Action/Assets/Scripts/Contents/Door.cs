@@ -70,13 +70,11 @@ public class Door : MonoBehaviour
     {
         anim.SetBool("IsOpen", true);
         Managers.Game.KeyInventory[_type]--;
-        Debug.Log("Check");
     }
 
     IEnumerator CoClose()
     {
         yield return new WaitForSeconds(5f);
         anim.SetBool("IsOpen", false);
-        Debug.Log("Close");
     }
 }

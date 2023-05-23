@@ -66,13 +66,15 @@ public class Key : MonoBehaviour
         {
             EnemyController enemy = other.GetComponent<EnemyController>();
 
-            if (enemy.state != Define.EnemyState.Follow)
+            if (enemy.State != Define.EnemyState.Follow)
             {
-                enemy.state = Define.EnemyState.Move;
+                enemy.State = Define.EnemyState.Move;
             }
 
             Managers.Resource.Destroy(gameObject);
-            Managers.Resource.Destroy(_interactionUI.gameObject);
+
+            if(_interactionUI != null)
+                Managers.Resource.Destroy(_interactionUI.gameObject);
         }
 
         if(other.CompareTag("Player"))

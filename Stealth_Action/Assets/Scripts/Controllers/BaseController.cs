@@ -5,9 +5,7 @@ using UnityEngine;
 
 public abstract class BaseController : MonoBehaviour
 {
-    protected float hp;
-    protected float damage;
-    [SerializeField] protected float moveSpeed;
+    [SerializeField] protected float _moveSpeed;
 
     protected abstract void Init();
 

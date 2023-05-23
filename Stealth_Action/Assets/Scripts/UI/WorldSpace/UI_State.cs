@@ -17,7 +17,7 @@ public class UI_State : MonoBehaviour
 
     void Update()
     {
-        transform.LookAt(Camera.main.transform);
+        transform.rotation = Camera.main.transform.rotation;
 
         if(enemy.IsWarining)
         {

@@ -4,6 +4,19 @@ using UnityEngine;
 
 public static class Util
 {
+    public static T GetOrAddComponent<T>(this GameObject go)  where T : Component
+    {
+        if(go == null)
+            return null;
+
+        T component = go.GetComponent<T>();
+
+        if (component == null)
+            component = go.AddComponent<T>();
+
+        return component;
+    }
+
     public static T FindChild<T>(this GameObject go, string name = null, bool recursive = false) where T : UnityEngine.Object
     {
         if (go == null)
@@ -22,7 +35,7 @@ public static class Util
             for (int i = 0; i < go.transform.childCount; i++)
             {
                 Transform transform = go.transform.GetChild(i);
-                T component = go.GetComponent<T>();
+                T component = transform.GetComponent<T>();
 
                 if(component != null)
                 {
@@ -39,9 +52,25 @@ public static class Util
     {
         Transform transform = FindChild<Transform>(go, name, recursive);
 
-        if (transform.gameObject == null)
+        if (transform == null)
             return null;
 
         return transform.gameObject;
+    }
+
+    public static DataContents.ViewCastInfo ViewCast(this GameObject go, float angle, float range)
+    {
+        Vector3 dir = DirFromAngle(angle);
+        RaycastHit hit;
+
+        if (Physics.Raycast(go.transform.position, dir, out hit, range))
+            return new DataContents.ViewCastInfo(true, angle, hit.distance, hit.point);
+        else
+            return new DataContents.ViewCastInfo(false, angle, hit.distance, go.transform.position + dir * range);
+    }
+
+    public static Vector3 DirFromAngle(this float angle)
+    {
+        return new Vector3(Mathf.Cos((-angle + 90) * Mathf.Deg2Rad), 0, Mathf.Sin((-angle + 90) * Mathf.Deg2Rad));
     }
 }

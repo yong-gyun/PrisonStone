@@ -15,7 +15,7 @@ public class PlayerController : BaseController
 
     protected override void Init()
     {
-        moveSpeed = 7.5f;
+        _moveSpeed = 7.5f;
         _firePos = transform.Find("FirePos");
         _currentCount = _maxCount;
 
@@ -54,7 +54,7 @@ public class PlayerController : BaseController
 
         if (dir != Vector3.zero)
         {
-            _rb.velocity = dir.normalized * moveSpeed;
+            _rb.velocity = dir.normalized * _moveSpeed;
             //transform.position += dir.normalized * moveSpeed * Time.deltaTime;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), _rotSpeed * Time.deltaTime);
             _anim.SetBool("IsMove", true);
