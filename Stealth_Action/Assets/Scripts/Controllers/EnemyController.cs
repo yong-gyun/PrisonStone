@@ -85,8 +85,6 @@ public class EnemyController : BaseController
                     return;
                 }
             }
-
-            Debug.DrawRay(_findPoint.position, dir * _keyFindRange, Color.red, .1f);
         }
 
         if (Managers.Game.GetPlayer() != null)
@@ -97,7 +95,8 @@ public class EnemyController : BaseController
             {
                 float dotProduct = Vector3.Dot(interval.normalized, _findPoint.forward);
                 float degree = Mathf.Acos(dotProduct) * Mathf.Rad2Deg;
-                if (_playerFindAngle / 2 > dotProduct && dotProduct > 0)
+                
+                if (degree <= _playerFindAngle)
                 {
                     State = Define.EnemyState.Follow;
                     return;
