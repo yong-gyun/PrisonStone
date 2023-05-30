@@ -3,22 +3,21 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+[RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class CCTV : MonoBehaviour
 {
     MeshFilter _meshFilter;
     Mesh _mesh;
-    [SerializeField] List<Vector3> _points = new List<Vector3>();
     Transform _findPoint;
-    public float Radius { get { return _findRadius; } }
-    public float Angle { get { return _findAngle; } }
 
-    float _findRadius = 5f;
-    float _findAngle = 75f;
     float _rotRange = 40f;
     float _rotSpeed = 0.25f;
     float _minAngle = 0;
     float _maxAngle = 0;
-    
+    int _polygon = 15;
+    float _width = 3f;
+    float _height = 13f;
+
     private void Awake()
     {
         _minAngle = transform.eulerAngles.y - _rotRange;
@@ -38,37 +37,18 @@ public class CCTV : MonoBehaviour
         if (Managers.Game.GetPlayer() == null)
             return;
 
-        Vector3 interval = Managers.Game.GetPlayer().transform.position - _findPoint.position;
-        interval.y = 0;
-        float distance = interval.magnitude; 
+        RaycastHit hit;
 
-        if(distance <= _findRadius)
+        if (Physics.Raycast(_findPoint.position, (transform.forward + Vector3.down), out hit, _height))
         {
-            float dotProduct = Vector3.Dot(interval.normalized, transform.forward + Vector3.down);
-            float theta = Mathf.Acos(dotProduct);
-            float degree = Mathf.Rad2Deg * theta;
+            float distance = Vector3.Distance(Managers.Game.GetPlayer().transform.position, hit.point);
 
-            if (degree < _findAngle / 2)
-            {
-                RaycastHit hit;
-
-                if(Physics.Raycast(transform.position, interval.normalized, out hit, _findRadius))
-                {
-                    if (!Managers.Game.EnemyList[0].IsWarining)
-                    {
-                        Instantiate(Resources.Load<GameObject>("Prefabs/UI_Warning"));
-
-                        for (int i = 0; i < Managers.Game.EnemyList.Count; i++)
-                        {
-                            Managers.Game.EnemyList[i].OnWarning(10);
-                        }
-                    }
-
-                }
-            }
+            if (distance <= _width)
+                Debug.Log("D");
         }
 
-        DrawMesh();
+        Debug.DrawRay(_findPoint.position, (transform.forward + Vector3.down) * _height, Color.red, 0.1f);
+        Renderer();
     }
 
     IEnumerator CoRotation()
@@ -108,53 +88,67 @@ public class CCTV : MonoBehaviour
 
     float _meshResolution = 0.1f;
 
-    void DrawMesh()
+    void Renderer()
     {
-        _points.Clear();
+        Vector3[] vertices = new Vector3[_polygon * 2 + 2];
+        int[] triangles = new int[_polygon * 6];
 
-        int count = Mathf.RoundToInt(_findAngle * _meshResolution);
-        float size = _findAngle / count;
-
-        for (int i = 0; i <= count; i++)
-        {
-            float angle = transform.eulerAngles.y - _findAngle / 2 + size * i;
-            Vector3 end = _findPoint.position + DirFromAngle(angle) * _findRadius;
-            end.y = transform.position.y - 2;
-            _points.Add(end);
-        }
-
-        int vertexCount = _points.Count + 1;
-        Vector3[] vertices = new Vector3[vertexCount];
-        int[] triangles = new int[(vertexCount - 2) * 3];
         vertices[0] = Vector3.zero;
 
-        for (int i = 0; i < vertexCount - 1; i++)
+        //시계 방향
         {
-            vertices[i + 1] = transform.InverseTransformPoint(_points[i]);
+            for (int i = 1; i <= _polygon; i++)
+            {
+                float angle = -i * (Mathf.PI * 2.0f) / _polygon;
+                Vector3 vertex = DirFromAngle(angle) * _width;
+                vertex.y = -_height;
+                vertices[i] = vertex;
+            }
 
-            if (i < vertexCount - 2)
+            for (int i = 0; i < _polygon - 1; i++)
             {
                 triangles[i * 3] = 0;
-                triangles[i * 3 + 1] = i + 1;
-                triangles[i * 3 + 2] = i + 2;
+                triangles[i * 3 + 1] = i + 2;
+                triangles[i * 3 + 2] = i + 1;
             }
+
+            triangles[3 * _polygon - 3] = 0;
+            triangles[3 * _polygon - 2] = 1;
+            triangles[3 * _polygon - 1] = _polygon;
         }
-        
-        _meshFilter.mesh.Clear();
-        _meshFilter.mesh.vertices = vertices;
-        _meshFilter.mesh.triangles = triangles;
-        _meshFilter.mesh.RecalculateNormals();
+
+        //반시계방향
+        {
+            int vIdx = _polygon + 1;
+            vertices[vIdx++] = vertices[0];
+
+            for (int i = 1; i <= _polygon; i++)
+            {
+                vertices[vIdx++] = vertices[i];
+            }
+
+            int tIdx = 3 * _polygon;
+
+            for (int i = 0; i < _polygon - 1; i++)
+            {
+                triangles[tIdx++] = (_polygon + 1) + i + 1;
+                triangles[tIdx++] = (_polygon + 1) + i + 2;
+                triangles[tIdx++] = (_polygon + 1);
+            }
+
+            triangles[tIdx++] = (_polygon + 1) + _polygon;
+            triangles[tIdx++] = (_polygon + 1) + 1;
+            triangles[tIdx++] = (_polygon + 1);
+        }
+
+        _mesh.Clear();
+        _mesh.vertices = vertices;
+        _mesh.triangles = triangles;
+        _mesh.RecalculateNormals();
     }
 
-    public Vector3 DirFromAngle(float angle)
+    Vector3 DirFromAngle(float angle)
     {
-        return new Vector3(Mathf.Cos((-angle + 90) * Mathf.Deg2Rad), 0, Mathf.Sin((-angle + 90) * Mathf.Deg2Rad));
+        return new Vector3(Mathf.Cos(angle) * Mathf.Rad2Deg, 0, Mathf.Sin(angle) * Mathf.Rad2Deg).normalized;
     }
-
-    //void OnDrawGizmos()
-    //{
-    //    Handles.color = new Color(1, 0, 0, 0.1f);
-    //    Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, _findAngle, _findRange);
-    //    Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, -_findAngle, _findRange);
-    //}
 }

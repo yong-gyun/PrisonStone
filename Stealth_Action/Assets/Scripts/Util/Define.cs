@@ -28,5 +28,8 @@ public class Define
         MaxCount
     }
 
-    
+    public enum CameraMode
+    {
+        
+    }
 }

@@ -69,7 +69,7 @@ public class PlayerController : BaseController
     //Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     //Vector3 dir = mousePos - transform.position;
     //dir.y = 0;
-    //float theta = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+    //float theta = Mathf.Atan2(dir.y, dir.x);
     //float degree = theta * Mathf.Rad2Deg; 
     //Quaternion qua = Quaternion.AngleAxis(degree, Vector3.up);
     //transform.rotation = qua;
