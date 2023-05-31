@@ -85,9 +85,6 @@ public class CCTV : MonoBehaviour
         }
     }
 
-
-    float _meshResolution = 0.1f;
-
     void Renderer()
     {
         Vector3[] vertices = new Vector3[_polygon * 2 + 2];

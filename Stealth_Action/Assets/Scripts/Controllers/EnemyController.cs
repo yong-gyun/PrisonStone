@@ -4,8 +4,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-
-
 public class EnemyController : BaseController
 {
     public Define.EnemyState State { get; set; }

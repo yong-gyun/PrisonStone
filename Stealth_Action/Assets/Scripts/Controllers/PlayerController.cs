@@ -39,10 +39,6 @@ public class PlayerController : BaseController
             }
         }
 
-    }
-
-    private void FixedUpdate()
-    {
         UpdateMove();
     }
 
@@ -54,8 +50,13 @@ public class PlayerController : BaseController
 
         if (dir != Vector3.zero)
         {
-            _rb.velocity = dir.normalized * _moveSpeed;
-            //transform.position += dir.normalized * moveSpeed * Time.deltaTime;
+            if (Physics.Raycast(transform.position + Vector3.up, dir, 2f, LayerMask.GetMask("Wall")))
+            {
+                _anim.SetBool("IsMove", false);
+                return;
+            }
+
+            transform.position += dir.normalized * _moveSpeed * Time.deltaTime;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), _rotSpeed * Time.deltaTime);
             _anim.SetBool("IsMove", true);
         }
