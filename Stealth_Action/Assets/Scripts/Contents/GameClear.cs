@@ -8,7 +8,7 @@ public class GameClear : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            Managers.UI.ShowPopupUI<UI_Fade>().OnFadeHandler += () => { Managers.UI.ShowPopupUI<UI_GameClear>(); };
+            Managers.UI.MakeProduction<UI_FadeIn>().OnFadeHandler += () => { Managers.UI.ShowPopupUI<UI_GameClear>(); };
         }
     }
 }

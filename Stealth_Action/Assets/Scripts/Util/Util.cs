@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,7 +25,7 @@ public static class Util
 
         if(recursive)
         {
-            foreach (T component in go.GetComponentsInChildren<T>())
+            foreach (T component in go.GetComponentsInChildren<T>(true))
             {
                 if(string.IsNullOrEmpty(name) || component.name == name)
                     return component;
@@ -72,5 +73,12 @@ public static class Util
     public static Vector3 DirFromAngle(this float angle)
     {
         return new Vector3(Mathf.Cos((-angle + 90) * Mathf.Deg2Rad), 0, Mathf.Sin((-angle + 90) * Mathf.Deg2Rad));
+    }
+
+    public static SequnceEvent BindSequnceEvent(this GameObject go, Action action)
+    {
+        SequnceEvent evt = go.GetOrAddComponent<SequnceEvent>();
+        evt.OnSequnceEventHandler += action;
+        return evt;
     }
 }

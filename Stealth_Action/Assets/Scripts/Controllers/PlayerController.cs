@@ -13,6 +13,8 @@ public class PlayerController : BaseController
     public int _maxCount { get; private set; } = 4;
     public int _currentCount { get; private set; }  = 0;
 
+    public bool IsActionable { get; set; }
+
     protected override void Init()
     {
         _moveSpeed = 7.5f;
@@ -26,6 +28,9 @@ public class PlayerController : BaseController
 
     protected override void Update()
     {
+        if (Managers.Sequnce.IsCinematic || !IsActionable)
+            return;
+
         UpdateAttack();
 
         if(_currentCount < _maxCount)

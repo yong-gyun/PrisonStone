@@ -77,33 +77,4 @@ public class CameraController : MonoBehaviour
     }
 
     [SerializeField] float _mouseX = 0;
-    float _radius = 10f;
-
-    void UpdateCam()
-    {
-        if (Input.GetMouseButton(0))
-        {
-            _mouseX += Input.GetAxis("Mouse X");
-
-            float angle = (Mathf.PI * 2) * _mouseX + 180f;
-            Vector3 dir = Util.DirFromAngle(angle);
-            Vector3 dest = _player.transform.position + (dir * (_delta.magnitude / 2)) + (Vector3.up * _delta.y);
-            transform.position = dest;
-
-            transform.LookAt(_player);
-        }
-
-        if(Input.GetMouseButton(1))
-        {
-            Vector3 dest = _player.position + _zoomDelta;
-            transform.position = Vector3.Lerp(transform.position, dest, 180f * Time.deltaTime);
-            return;
-        }
-        
-        if(Input.GetMouseButtonUp(0))
-        {
-            _mouseX = 0;
-            transform.rotation = _rotOrigin;
-        }
-    }
 }

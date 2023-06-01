@@ -10,10 +10,13 @@ public class Managers : MonoBehaviour
     GameManager _game = new GameManager();
     ResourceManager _resource = new ResourceManager();
     UIManager _ui = new UIManager();
+    SequnceManager _sequnce = new SequnceManager();
 
     public static GameManager Game { get { return Instance._game; } }
     public static ResourceManager Resource { get { return Instance._resource; } }
     public static UIManager UI { get { return Instance._ui; } }
+    public static SequnceManager Sequnce { get {  return Instance._sequnce; } }
+
 
     void Start()
     {

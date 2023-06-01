@@ -28,8 +28,14 @@ public class Define
         MaxCount
     }
 
-    public enum CameraMode
+    public enum SequnceNumber
     {
-        
+        Opening_1,
+        Opening_2
+    }
+
+    public enum Scene
+    {
+
     }
 }

@@ -18,6 +18,7 @@ public class UIManager
 
     public UI_Scene SceneUI { get; private set; }
     Stack<UI_Popup> _popupStack = new Stack<UI_Popup>();
+    Queue<UI_Production> _productionQueue = new Queue<UI_Production>();
     int _order = 10;
 
     public void SetCanvas(GameObject go, bool sort = false)
@@ -93,6 +94,30 @@ public class UIManager
             worldSpaceUI.transform.SetParent(parent);
 
         return worldSpaceUI;
+    }
+
+    public T MakeProduction<T>(string name = null) where T : UI_Production
+    {
+        if(string.IsNullOrEmpty(name))
+            name = typeof(T).Name;
+
+        GameObject go = Managers.Resource.Instantiate($"UI/Production/{name}");
+
+        if (go == null)
+            return null;
+
+        T production = go.GetOrAddComponent<T>();
+        _productionQueue.Enqueue(production);
+        return production;
+    }
+
+    public void CloseProduction()
+    {
+        if (_productionQueue.Count == 0)
+            return;
+
+        UI_Production production = _productionQueue.Dequeue();
+        Managers.Resource.Destroy(production.gameObject);
     }
 
     public void ClosePopupUI()
