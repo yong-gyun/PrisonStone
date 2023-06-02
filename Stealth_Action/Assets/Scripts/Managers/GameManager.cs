@@ -2,18 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public struct Item
-{
-    public Define.CardKey Type;
-    public int Count;
-
-    public Item(Define.CardKey type, int count)
-    {
-        Type = type;
-        Count = count;
-    }
-}
-
 public class GameManager
 {
     GameObject _player;

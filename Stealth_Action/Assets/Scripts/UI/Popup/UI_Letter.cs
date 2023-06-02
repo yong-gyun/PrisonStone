@@ -21,7 +21,11 @@ public class UI_Letter : UI_Popup
         base.ClosePopupUI();
         Managers.UI.MakeProduction<UI_FadeIn>().OnFadeHandler += () => 
         {
-            Managers.UI.MakeProduction<UI_FadeOut>().OnFadeHandler += () => { Managers.Game.GetPlayer().GetComponent<PlayerController>().IsActionable = true; };
+            Managers.UI.MakeProduction<UI_FadeOut>().OnFadeHandler += () => 
+            {
+                Managers.Sequnce.PlaySequnce(Define.SequnceNumber.Opening_2);
+                Managers.Game.GetPlayer().GetComponent<PlayerController>().IsActionable = true;
+            };
             Managers.Game.KeyInventory[Define.CardKey.White]++;
             Managers.Game.GetPlayer().FindChild("Gun", true).SetActive(true);
 
@@ -29,7 +33,6 @@ public class UI_Letter : UI_Popup
             Managers.Game.GetPlayer().transform.rotation = Quaternion.identity;
             Managers.Game.GetPlayer().FindChild("Model", true).transform.rotation = Quaternion.identity;
             Camera.main.transform.position = new Vector3(0f, 9.5f, -47.5f);
-
         };
     }
 }

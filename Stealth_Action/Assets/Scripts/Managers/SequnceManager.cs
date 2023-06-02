@@ -23,7 +23,18 @@ public class SequnceManager
 
     GameObject _currentSequnce;
     public bool IsCinematic { get; private set; }
+    public UI_Sequnce SequnceUI
+    {
+        get
+        {
+            if (_sequnceUI == null)
+                _sequnceUI = GameObject.Find("UI_Dialog").GetComponent<UI_Sequnce>();
 
+            return _sequnceUI;
+        }
+    }
+    
+    UI_Sequnce _sequnceUI;
     public void Init()
     {
         _root = GameObject.Find("@TimelineRoot").transform;
@@ -31,6 +42,7 @@ public class SequnceManager
         for (int i = 0; i < _root.childCount; i++)
         {
             Transform child = _root.GetChild(i);
+            child.GetComponent<PlayableDirector>().playOnAwake = false;
             Define.SequnceNumber sequnce = (Define.SequnceNumber) i;
 
             switch (sequnce)
@@ -44,9 +56,9 @@ public class SequnceManager
                     break;
                 case Define.SequnceNumber.Opening_2:
                     child.gameObject.BindSequnceEvent(() => 
-                    { 
-                        Managers.UI.MakeProduction<UI_FadeIn>().OnFadeHandler += () => { Managers.UI.MakeProduction<UI_FadeOut>(); }; 
-                            
+                    {
+                        SequnceUI.SetActive(false);
+                        Camera.main.GetComponent<CameraController>().enabled = true;
                         IsCinematic = false; 
                     });
                     break;
@@ -54,16 +66,23 @@ public class SequnceManager
         }
     }
 
-    public void PlaySequnce(Define.SequnceNumber num = Define.SequnceNumber.Opening_1)
+    public void PlaySequnce(Define.SequnceNumber num)
     {
         _currentSequnce = _root.GetChild((int)num).gameObject;
         PlayableDirector playableDirector = _currentSequnce.GetComponent<PlayableDirector>();
+        SequnceUI.SetActive(true);
         playableDirector.Play();
         IsCinematic = true;
+        Debug.Log(num);
     }
 
     public void StopSequnce()
     {
         Managers.Resource.Destroy(CurrentSequnce);
+    }
+
+    public void CloseUI()
+    {
+
     }
 }

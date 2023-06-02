@@ -38,7 +38,9 @@ public class UI_FadeOut : UI_Production
         }
 
         if (OnFadeHandler != null)
+        {
             OnFadeHandler.Invoke();
+        }
 
         Managers.UI.CloseProduction();
     }

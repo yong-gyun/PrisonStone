@@ -8,6 +8,6 @@ public class GameScene : BaseScene
     {
         Managers.Sequnce.Init();
         Managers.UI.MakeProduction<UI_FadeOut>();
-        Managers.Sequnce.PlaySequnce();
+        Managers.Sequnce.PlaySequnce(Define.SequnceNumber.Opening_1);
     }
 }
