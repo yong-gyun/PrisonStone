@@ -2369,7 +2369,6 @@ GameObject:
   - component: {fileID: 387122196}
   - component: {fileID: 387122195}
   - component: {fileID: 387122194}
-  - component: {fileID: 387122197}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2443,19 +2442,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 40, y: 0, z: 0}
---- !u!114 &387122197
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 387122193}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8cdec0ecd8fbe0469601e5996921913, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _mouseX: 0
 --- !u!1 &423805709
 GameObject:
   m_ObjectHideFlags: 0
@@ -10555,7 +10541,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC774\uAC74 \uBB50\uC9C0 ?"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 50db7a61e7cddc64ab6fed0bd5daeb0e, type: 2}
   m_sharedMaterial: {fileID: -7826260625233692713, guid: 50db7a61e7cddc64ab6fed0bd5daeb0e, type: 2}
@@ -10565,7 +10551,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColor: {r: 1, g: 1, b: 1, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -14970,12 +14956,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
-    are already bound by a Humanoid avatar. These transforms can only be changed
-    by Humanoid clips.\n\tTransform 'thumb_01_l'\n\tTransform 'index_02_r'\n\tTransform
-    'spine_02'\n\tTransform 'thumb_02_r'\n\tTransform 'index_02_l'\n\tTransform 'thumb_01_r'\n\tTransform
-    'thumb_02_l'\n\tTransform 'thigh_l'\n\tTransform 'calf_l'\n\tTransform 'foot_l'\n\tand
-    more ..."
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
