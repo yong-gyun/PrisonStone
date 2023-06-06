@@ -12,6 +12,6 @@ public class GameScene : BaseScene
 
     private void Start()
     {
-        Managers.Sequnce.PlaySequnce(Define.SequnceNumber.Opening_1);
+        Managers.Sequnce.Play(Define.SequnceNumber.Opening_1);
     }
 }

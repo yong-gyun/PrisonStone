@@ -29,7 +29,7 @@ MonoBehaviour:
   behaviour:
     position:
       active: 1
-      startValue: {x: -14.25, y: 9.75, z: -65}
+      startValue: {x: -14.25, y: 8, z: -65}
       endValue: {x: 8, y: 9.75, z: -39.5}
       ease:
         ease: 0
@@ -160,25 +160,7 @@ MonoBehaviour:
       m_RotationOrder: 4
     m_MixOutCurve:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -197,6 +179,39 @@ MonoBehaviour:
     m_ClipIn: 0
     m_Asset: {fileID: -3909396803268996506}
     m_Duration: 2.198151458675664
+    m_TimeScale: 1
+    m_ParentTrack: {fileID: -7893597102013841915}
+    m_EaseInDuration: 0
+    m_EaseOutDuration: 0
+    m_BlendInDuration: -1
+    m_BlendOutDuration: -1
+    m_MixInCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_MixOutCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_BlendInCurveMode: 0
+    m_BlendOutCurveMode: 0
+    m_ExposedParameterNames: []
+    m_AnimationCurves: {fileID: 0}
+    m_Recordable: 0
+    m_PostExtrapolationMode: 0
+    m_PreExtrapolationMode: 0
+    m_PostExtrapolationTime: 0
+    m_PreExtrapolationTime: 0
+    m_DisplayName: Tween Transform
+  - m_Version: 1
+    m_Start: 32.72970752256612
+    m_ClipIn: 0
+    m_Asset: {fileID: -4530356358090625048}
+    m_Duration: 5.800000000000008
     m_TimeScale: 1
     m_ParentTrack: {fileID: -7893597102013841915}
     m_EaseInDuration: 0
@@ -262,10 +277,10 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: Tween Transform
   - m_Version: 1
-    m_Start: 32.72970752256612
+    m_Start: 0
     m_ClipIn: 0
-    m_Asset: {fileID: -4530356358090625048}
-    m_Duration: 5.800000000000008
+    m_Asset: {fileID: -263820192784580892}
+    m_Duration: 5
     m_TimeScale: 1
     m_ParentTrack: {fileID: -7893597102013841915}
     m_EaseInDuration: 0
@@ -596,8 +611,8 @@ MonoBehaviour:
   behaviour:
     position:
       active: 1
-      startValue: {x: -14.25, y: 9.75, z: -65}
-      endValue: {x: 8, y: 9.75, z: -39.5}
+      startValue: {x: -14.25, y: 8, z: -65}
+      endValue: {x: 8, y: 8, z: -39.5}
       ease:
         ease: 0
         customEaseCurve:
@@ -703,7 +718,7 @@ MonoBehaviour:
     position:
       active: 1
       startValue: {x: 8, y: 9.75, z: -39.5}
-      endValue: {x: -14.25, y: 9.75, z: -65}
+      endValue: {x: -14.25, y: 8, z: -65}
       ease:
         ease: 0
         customEaseCurve:
@@ -1034,6 +1049,112 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Text: "\uB098\uB791 \uC7A5\uB09C\uCE58\uC790\uB294 \uAC70\uC57C ?"
   TextColor: {r: 1, g: 1, b: 1, a: 0}
+--- !u!114 &-263820192784580892
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98ea6e13456564e5b8d936e739cc79c4, type: 3}
+  m_Name: TweenTransformClip
+  m_EditorClassIdentifier: 
+  behaviour:
+    position:
+      active: 1
+      startValue: {x: -14.25, y: 8, z: -65}
+      endValue: {x: -14.25, y: 8, z: -65}
+      ease:
+        ease: 0
+        customEaseCurve:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 0
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 1
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+      relative: 0
+    rotation:
+      active: 1
+      startValue: {x: 40, y: 0, z: 0}
+      endValue: {x: 40, y: 0, z: 0}
+      ease:
+        ease: 0
+        customEaseCurve:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 0
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 1
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+      relative: 0
+    scale:
+      active: 0
+      startValue: {x: 0, y: 0, z: 0}
+      endValue: {x: 0, y: 0, z: 0}
+      ease:
+        ease: 0
+        customEaseCurve:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 0
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 1
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+      relative: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0

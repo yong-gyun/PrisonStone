@@ -23,7 +23,7 @@ public class UI_Letter : UI_Popup
         {
             Managers.UI.MakeProduction<UI_FadeOut>().OnFadeHandler += () => 
             {
-                Managers.Sequnce.PlaySequnce(Define.SequnceNumber.Opening_2);
+                Managers.Sequnce.Play(Define.SequnceNumber.Opening_2);
                 Managers.Game.GetPlayer().GetComponent<PlayerController>().IsActionable = true;
             };
             Managers.Game.KeyInventory[Define.CardKey.White]++;
