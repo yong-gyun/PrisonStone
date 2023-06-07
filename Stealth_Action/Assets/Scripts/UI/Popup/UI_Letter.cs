@@ -32,7 +32,7 @@ public class UI_Letter : UI_Popup
             Managers.Game.GetPlayer().transform.position = new Vector3(0f, 0f, -42f);
             Managers.Game.GetPlayer().transform.rotation = Quaternion.identity;
             Managers.Game.GetPlayer().FindChild("Model", true).transform.rotation = Quaternion.identity;
-            Camera.main.transform.position = new Vector3(0f, 9.5f, -47.5f);
+            Managers.Sequnce.CinematicCamera.transform.position = new Vector3(0f, 9.5f, -47.5f);
         };
     }
 }

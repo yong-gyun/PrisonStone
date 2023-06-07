@@ -38,6 +38,7 @@ public class SequnceManager
     
     UI_Sequnce _sequnceUI;
     Camera _cinematicCam;
+    Camera _mainCamera;
 
     public Camera CinematicCamera 
     { 
@@ -50,6 +51,10 @@ public class SequnceManager
 
             return _cinematicCam; 
         } 
+        set
+        { 
+            _cinematicCam = value; 
+        }
     }
 
     public void Init()
@@ -76,12 +81,14 @@ public class SequnceManager
                     {
                         SequnceUI.SetActive(false);
                         IsCinematic = false;
+                        Stop();
                     });
                     break;
             }
-
-            child.gameObject.BindSequnceEvent(Stop);
         }
+
+        _mainCamera = Camera.main;
+        _cinematicCam = GameObject.Find("@CinematicCam").GetComponent<Camera>();
     }
 
     public void Play(Define.SequnceNumber num)
@@ -91,8 +98,10 @@ public class SequnceManager
         _currentSequnce.Play();
 
         CinematicCamera.gameObject.SetActive(true);
-        Camera.main.gameObject.SetActive(false);
+        _mainCamera.gameObject.SetActive(false);
         IsCinematic = true;
+
+        Managers.CamRoot.GetComponent<CameraController>().enabled = false;
         Debug.Log(num);
     }
 
@@ -100,7 +109,9 @@ public class SequnceManager
     {
         PlayableDirector playableDirector = _currentSequnce.GetComponent<PlayableDirector>();
         playableDirector.Stop();
-        _cinematicCam.gameObject.SetActive(false);
-        Camera.main.gameObject.SetActive(true);
+        CinematicCamera.gameObject.SetActive(false);
+        _mainCamera.gameObject.SetActive(true);
+
+        Managers.CamRoot.GetComponent<CameraController>().enabled = true;
     }
 }

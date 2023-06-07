@@ -17,6 +17,14 @@ public class Managers : MonoBehaviour
     public static UIManager UI { get { return Instance._ui; } }
     public static SequnceManager Sequnce { get {  return Instance._sequnce; } }
 
+    static Transform _camRoot;
+    public static Transform CamRoot
+    {
+        get
+        {
+            return _camRoot;
+        }
+    }
 
     void Start()
     {
@@ -37,6 +45,7 @@ public class Managers : MonoBehaviour
 
             s_instance = go.GetComponent<Managers>();
             s_instance._game.Init();
+            _camRoot = Camera.main.transform.root;
         }
     }
 
