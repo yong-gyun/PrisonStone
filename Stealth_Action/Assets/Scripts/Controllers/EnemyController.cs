@@ -14,7 +14,7 @@ public class EnemyController : BaseController
     Mesh _mesh;
 
     [SerializeField] Transform[] _points;
-    Transform _findPoint;
+    [SerializeField] Transform _findPoint;
 
     float _playerFindRange = 6f;
     float _playerFindAngle = 60f;
@@ -26,10 +26,13 @@ public class EnemyController : BaseController
     
     public override void Init()
     {
-        _moveSpeed = 6f;
+        _minSpeed = 6f;
+        _maxSpeed = 8f;
+        _moveSpeed = _minSpeed;
+
         _nma = GetComponent<NavMeshAgent>();
         _nma.speed = _moveSpeed;
-
+        
         _playerFindAngle = 60f;
         _playerFindRange = 6f;
         Managers.Game.EnemyList.Add(this);
@@ -104,7 +107,7 @@ public class EnemyController : BaseController
 
         _target = _points[_pointIdx % _points.Length];
         
-        if (Vector3.Distance(_target.position, transform.position) <= 2.5f)
+        if (_nma.velocity.sqrMagnitude <= 0.2f)
         {
             _pointIdx++;
         }

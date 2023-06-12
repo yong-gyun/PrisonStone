@@ -5,6 +5,8 @@ using UnityEngine;
 
 public abstract class BaseController : MonoBehaviour
 {
+    [SerializeField] protected float _minSpeed;
+    [SerializeField] protected float _maxSpeed;
     [SerializeField] protected float _moveSpeed;
 
     public abstract void Init();

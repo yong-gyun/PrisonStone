@@ -44,5 +44,10 @@ public class Bullet : MonoBehaviour
             other.GetComponent<EnemyController>().OnHit();
             Destroy(gameObject);
         }
+
+        if(other.CompareTag("Wall"))
+        {
+            Destroy(gameObject);
+        }
     }
 }
