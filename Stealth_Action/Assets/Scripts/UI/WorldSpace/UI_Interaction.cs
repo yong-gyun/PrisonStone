@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class UI_Interaction : UI_Base
@@ -19,9 +20,10 @@ public class UI_Interaction : UI_Base
             if (OnInteractionHandler != null)
             {
                 OnInteractionHandler.Invoke();
-                Debug.Log("Check");
             }
         }
+
+        transform.rotation = Camera.main.transform.rotation;
     }
 
     protected override void Init()

@@ -72,8 +72,10 @@ public class SequnceManager
                 case Define.SequnceNumber.Opening_1:
                     child.gameObject.BindSequnceEvent(() =>
                     {
-                        Managers.UI.ShowPopupUI<UI_Letter>(); IsCinematic = false;
+                        Managers.UI.ShowPopupUI<UI_Letter>(); 
+                        IsCinematic = false;
                         Managers.Game.GetPlayer().GetComponent<PlayerController>().IsActionable = false;
+                        Cursor.lockState = CursorLockMode.None;
                     });
                     break;
                 case Define.SequnceNumber.Opening_2:
@@ -81,6 +83,7 @@ public class SequnceManager
                     {
                         SequnceUI.SetActive(false);
                         IsCinematic = false;
+                        Managers.Game.GetPlayer().GetComponent<PlayerController>().Init(); 
                         Stop();
                     });
                     break;

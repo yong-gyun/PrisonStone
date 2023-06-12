@@ -7,7 +7,7 @@ public abstract class BaseController : MonoBehaviour
 {
     [SerializeField] protected float _moveSpeed;
 
-    protected abstract void Init();
+    public abstract void Init();
 
     protected virtual void Start()
     {

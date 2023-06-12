@@ -24,7 +24,7 @@ public class EnemyController : BaseController
     [SerializeField] int _pointIdx = 0;
     bool isStun;
     
-    protected override void Init()
+    public override void Init()
     {
         _moveSpeed = 6f;
         _nma = GetComponent<NavMeshAgent>();

@@ -4,22 +4,26 @@ using UnityEngine;
 
 public class PlayerController : BaseController
 {
+    public int MaxCount { get; private set; } = 4;
+    public int CurrentCount { get; private set; } = 0;
+    public bool IsActionable { get; set; }
+
     Animator _anim;
     Transform _firePos;
     Rigidbody _rb;
-    float _rotSpeed = 30;
     float _currentTime = 0;
+    [SerializeField] bool _isAiming;
 
-    public int _maxCount { get; private set; } = 4;
-    public int _currentCount { get; private set; }  = 0;
+    protected override void Start()
+    {
 
-    public bool IsActionable { get; set; }
+    }
 
-    protected override void Init()
+    public override void Init()
     {
         _moveSpeed = 7.5f;
-        _firePos = transform.Find("FirePos");
-        _currentCount = _maxCount;
+        _firePos = gameObject.FindChild("FirePos", true).transform;
+        CurrentCount = MaxCount;
 
         _rb = GetComponent<Rigidbody>();
         _anim = GetComponentInChildren<Animator>();
@@ -33,17 +37,18 @@ public class PlayerController : BaseController
 
         UpdateAttack();
 
-        if(_currentCount < _maxCount)
+        if(CurrentCount < MaxCount)
         {
             _currentTime += Time.deltaTime;
 
             if(_currentTime >= 4f)
             {
                 _currentTime = 0;
-                _currentCount++;
+                CurrentCount++;
             }
         }
 
+        _isAiming = Input.GetMouseButton(1);
         UpdateMove();
     }
 
@@ -51,42 +56,61 @@ public class PlayerController : BaseController
     {
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
-        Vector3 dir = (Vector3.right * horizontal) + (Vector3.forward * vertical);
+        Vector3 dir = (transform.right * horizontal) + (transform.forward * vertical);
 
         if (dir != Vector3.zero)
         {
             if (Physics.Raycast(transform.position + Vector3.up, dir, 2f, LayerMask.GetMask("Wall")))
             {
-                _anim.SetBool("IsMove", false);
+                _anim.SetFloat("Speed", 0);
                 return;
             }
 
             transform.position += dir.normalized * _moveSpeed * Time.deltaTime;
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), _rotSpeed * Time.deltaTime);
-            _anim.SetBool("IsMove", true);
+            //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), _rotSpeed * Time.deltaTime);
         }
         else
         {
             _rb.velocity = Vector3.zero;
-            _anim.SetBool("IsMove", false);
+        }
+
+        if(_isAiming)
+        {
+            _anim.SetBool("Aiming", true);
+        }
+        else
+        {
+            float speed = _rb.velocity.normalized.magnitude;
+            float curSpeed = Mathf.Clamp(speed, 0f, 0.5f);
+            float velocityX = dir.x;
+            float velocityZ = dir.z;
+
+            if (Input.GetKey(KeyCode.LeftShift))
+                curSpeed = 1f;
+
+            _anim.SetFloat("Speed", curSpeed);
+            _anim.SetFloat("VelocityX", velocityX);
+            _anim.SetFloat("VelocityZ", velocityZ);
+            _anim.SetBool("Aiming", false);
         }
     }
 
-    //Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-    //Vector3 dir = mousePos - transform.position;
-    //dir.y = 0;
-    //float theta = Mathf.Atan2(dir.y, dir.x);
-    //float degree = theta * Mathf.Rad2Deg; 
-    //Quaternion qua = Quaternion.AngleAxis(degree, Vector3.up);
-    //transform.rotation = qua;
-
     protected override void UpdateAttack()
     {
-        if (_currentCount == 0)
+        if (CurrentCount == 0)
             return;
 
         if(Input.GetMouseButtonDown(0))
         {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if(Physics.Raycast(ray, out hit, Mathf.Infinity))
+            {
+                GameObject go = Managers.Resource.Instantiate("PlayerBullet", _firePos.position, Quaternion.identity);
+                Bullet bullet = go.GetComponent<Bullet>();
+                bullet.Init(hit.point);
+            }
             //∏∂√Î√— πﬂªÁ
         }
     }

@@ -16,6 +16,6 @@ public class UI_Count : MonoBehaviour
 
     private void Update()
     {
-        countText.text = $"{player._currentCount} / {player._maxCount}";
+        countText.text = $"{player.CurrentCount} / {player.MaxCount}";
     }
 }

@@ -42,6 +42,6 @@ public class UI_FadeOut : UI_Production
             OnFadeHandler.Invoke();
         }
 
-        Managers.UI.CloseProduction();
+        Managers.UI.CloseProduction(gameObject);
     }
 }

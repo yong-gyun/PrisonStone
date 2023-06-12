@@ -8,6 +8,7 @@ public class GameScene : BaseScene
     {
         Managers.Sequnce.Init();
         Managers.UI.MakeProduction<UI_FadeOut>();
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Start()

@@ -41,6 +41,6 @@ public class UI_FadeIn : UI_Production
         if (OnFadeHandler != null)
             OnFadeHandler.Invoke();
 
-        Managers.UI.CloseProduction();
+        Managers.UI.CloseProduction(gameObject);
     }
 }
