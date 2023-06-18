@@ -83,7 +83,9 @@ public class SequnceManager
                     {
                         SequnceUI.SetActive(false);
                         IsCinematic = false;
-                        Managers.Game.GetPlayer().GetComponent<PlayerController>().Init(); 
+                        Managers.Game.GetPlayer().GetComponent<PlayerController>().Init();
+                        Managers.UI.ShowSceneUI<UI_Status>();
+                        Managers.Sound.Play("Bgm/Game", Define.Sound.Bgm);
                         Stop();
                     });
                     break;
@@ -105,7 +107,7 @@ public class SequnceManager
         IsCinematic = true;
 
         Managers.CamRoot.GetComponent<CameraController>().enabled = false;
-        Debug.Log(num);
+        Managers.Game.GetPlayer().GetComponent<Rigidbody>().isKinematic = true;
     }
 
     public void Stop()
@@ -114,7 +116,7 @@ public class SequnceManager
         playableDirector.Stop();
         CinematicCamera.gameObject.SetActive(false);
         _mainCamera.gameObject.SetActive(true);
-
+        Managers.Game.GetPlayer().GetComponent<Rigidbody>().isKinematic = false;
         Managers.CamRoot.GetComponent<CameraController>().enabled = true;
     }
 }

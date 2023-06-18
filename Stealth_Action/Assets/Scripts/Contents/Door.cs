@@ -47,13 +47,13 @@ public class Door : MonoBehaviour
 
             if (Managers.Game.KeyInventory[_type] > 0 || !_needKey)
             {
-                _interactionUI.SetInfo("열려라 참깨", false);
+                _interactionUI.SetInfo("열기", false);
                 _interactionUI.OnInteractionHandler += OnOpen;
                 Debug.Log(Managers.Game.KeyInventory[_type]);
                 return;
             }
 
-            _interactionUI.SetInfo("열려라 참깨", true);
+            _interactionUI.SetInfo("열기", true);
         }
     }
 

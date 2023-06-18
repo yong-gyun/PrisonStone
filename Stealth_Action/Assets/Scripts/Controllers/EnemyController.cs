@@ -107,7 +107,7 @@ public class EnemyController : BaseController
 
         _target = _points[_pointIdx % _points.Length];
         
-        if (_nma.velocity.sqrMagnitude <= 0.2f)
+        if ((_target.position - transform.position).magnitude <= 5f)
         {
             _pointIdx++;
         }

@@ -7,8 +7,8 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField] float _mouseX = 0;
     [SerializeField] float _sensitive = 20f;
-    [SerializeField]Transform _aimingPoint;
-    [SerializeField]Transform _quarterviewPoint;
+    [SerializeField] Transform _aimingPoint;
+    [SerializeField] Transform _quarterviewPoint;
     [SerializeField] Define.CameraMode _mode;
     Transform _player;
 
@@ -23,7 +23,7 @@ public class CameraController : MonoBehaviour
 
     void LateUpdate()
     {
-        if (Camera.main == null)
+        if (Camera.main == null || _player == null)
             return;
 
         switch(_mode)
@@ -48,19 +48,27 @@ public class CameraController : MonoBehaviour
         Camera.main.transform.position = _quarterviewPoint.position;
         Camera.main.transform.localRotation = Quaternion.Euler(20, 0, 0);
 
-        Debug.DrawRay(Managers.CamRoot.transform.position, new Vector3(Managers.CamRoot.forward.x, 0, Managers.CamRoot.forward.z).normalized, Color.red, 1f);
-
         if(Input.GetKeyDown(KeyCode.R))
         {
             _mouseX = 0;
         }
 
-        if(Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1))
         {
             _mode = Define.CameraMode.Aiming;
             _crosshair = Managers.UI.MakeProduction<UI_Crosshair>();
             _crosshair.OnShow();
         }
+
+        //RaycastHit hit;
+        //float magnitude = (transform.position - _player.transform.position).magnitude;
+        //if (Physics.Raycast(_player.transform.position, _quarterviewPoint.position.normalized, out hit, magnitude, LayerMask.GetMask("Wall")))
+        //{
+        //    float distance = (hit.point - _player.transform.position).magnitude * 0.8f;
+        //    Camera.main.transform.position =  _player.transform.position + _quarterviewPoint.position.normalized * distance;
+        //}
+
+        //Debug.DrawRay(_player.transform.position, _quarterviewPoint.position.normalized * magnitude, Color.red, 0.1f);
     }
 
     UI_Crosshair _crosshair;
@@ -69,7 +77,6 @@ public class CameraController : MonoBehaviour
     {
         Camera.main.transform.position = _aimingPoint.position;
         Camera.main.transform.localRotation = Quaternion.identity;
-        float t = Time.deltaTime / 0.1f;
         
         if (Input.GetMouseButtonUp(1))
         {

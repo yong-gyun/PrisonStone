@@ -11,6 +11,6 @@ public class UI_Production : UI_Base
 
     public virtual void CloseProduction()
     {
-        Managers.Resource.Destroy(gameObject);
+        Managers.UI.CloseProduction(gameObject);
     }
 }

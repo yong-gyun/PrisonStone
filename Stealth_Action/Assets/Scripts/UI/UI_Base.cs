@@ -41,6 +41,7 @@ public abstract class UI_Base : MonoBehaviour
     protected void BindText(Type type) { Bind<TMP_Text>(type); }
     protected void BindInputField(Type type) { Bind<TMP_InputField>(type); }
     protected void BindButton(Type type) { Bind<Button>(type); }
+    protected void BindScrollbar(Type type) { Bind<Scrollbar>(type); }
     
     protected T Get<T>(int idx) where T : UnityEngine.Object
     {
@@ -55,10 +56,11 @@ public abstract class UI_Base : MonoBehaviour
         return objects[idx] as T;
     }
 
-    public GameObject GetObject(int idx) { return Get<GameObject>(idx); }
-    public Slider GetSlider(int idx) { return Get<Slider>(idx); }
-    public Image GetImage(int idx) { return Get<Image>(idx); }
-    public TMP_Text GetText(int idx) { return Get<TMP_Text>(idx); }
-    public TMP_InputField GetInputFieldint(int idx) { return Get<TMP_InputField>(idx); }
-    public Button GetButton(int idx) { return Get<Button>(idx); }
+    protected GameObject GetObject(int idx) { return Get<GameObject>(idx); }
+    protected Slider GetSlider(int idx) { return Get<Slider>(idx); }
+    protected Image GetImage(int idx) { return Get<Image>(idx); }
+    protected TMP_Text GetText(int idx) { return Get<TMP_Text>(idx); }
+    protected TMP_InputField GetInputFieldint(int idx) { return Get<TMP_InputField>(idx); }
+    protected Button GetButton(int idx) { return Get<Button>(idx); }
+    protected Scrollbar GetScrollbar(int idx) { return Get<Scrollbar>(idx); }
 }

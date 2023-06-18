@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class Define
 {
+    public enum Sound
+    {
+        Bgm,
+        Effect,
+        MaxCount
+    }
+
     public enum CameraMode
     {
         Quarterview,

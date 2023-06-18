@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerController : BaseController
 {
-    public int MaxCount { get; private set; } = 4;
-    public int CurrentCount { get; private set; } = 0;
+    public int MaxBulletCount { get; private set; } = 4;
+    public int CurrentBulletCount { get; private set; } = 0;
     public bool IsActionable { get; set; }
     public float CurrentStamina 
     {
@@ -15,7 +15,7 @@ public class PlayerController : BaseController
     public float MaxStamina { get { return _maxStamina; } private set { _maxStamina = value; } }
     public float CurrentReloadTime { get { return _currentReloadTime; } }
 
-    float _currentStamina = 8f;
+    [SerializeField] float _currentStamina = 8f;
     float _maxStamina = 8f;
 
     Animator _anim;
@@ -34,7 +34,7 @@ public class PlayerController : BaseController
         _minSpeed = 7.5f;
         _maxSpeed = 10f;
         _firePos = gameObject.FindChild("FirePos", true).transform;
-        CurrentCount = MaxCount;
+        CurrentBulletCount = MaxBulletCount;
 
         _rb = GetComponent<Rigidbody>();
         _anim = GetComponentInChildren<Animator>();
@@ -48,24 +48,26 @@ public class PlayerController : BaseController
 
         UpdateAttack();
 
-        if(CurrentCount < MaxCount)
+        if(CurrentBulletCount < MaxBulletCount)
         {
             _currentReloadTime += Time.deltaTime;
 
             if(_currentReloadTime >= 4f)
             {
                 _currentReloadTime = 0;
-                CurrentCount++;
+                CurrentBulletCount++;
             }
         }
 
         _isAiming = Input.GetMouseButton(1);
+
         UpdateMove();
     }
 
+    GameObject _staminaUI;
+
     protected override void UpdateMove()
     {
-        bool isRun = Input.GetKey(KeyCode.LeftShift);
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
         Vector3 dir = (transform.right * horizontal) + (transform.forward * vertical);
@@ -78,15 +80,25 @@ public class PlayerController : BaseController
                 return;
             }
 
-            if (isRun && CurrentStamina > 0f)
+            if (Input.GetKey(KeyCode.LeftShift))
             {
-                CurrentStamina -= Time.deltaTime;
-                _moveSpeed = _maxSpeed;
+                if (_staminaUI == null)
+                    _staminaUI = Managers.UI.MakeProduction<UI_Stamina>().gameObject;
+
+                if (CurrentStamina > 0f)
+                {
+                    CurrentStamina -= Time.deltaTime;
+                    _moveSpeed = _maxSpeed;
+                    _anim.SetFloat("Speed", 1);
+                }
             }
             else
             {
                 _moveSpeed = _minSpeed;
             }
+
+            if (Input.GetKeyUp(KeyCode.LeftShift))
+                Managers.UI.CloseProduction(_staminaUI);
 
             transform.position += dir.normalized * _moveSpeed * Time.deltaTime;
         }
@@ -96,7 +108,7 @@ public class PlayerController : BaseController
         }
 
 
-        if (!isRun)
+        if (!Input.GetKey(KeyCode.LeftShift))
         {
             CurrentStamina += Time.deltaTime;
         }
@@ -109,35 +121,34 @@ public class PlayerController : BaseController
         {
             float speed = _rb.velocity.normalized.magnitude;
             float curSpeed = Mathf.Clamp(speed, 0f, 0.5f);
-            float velocityX = dir.x;
-            float velocityZ = dir.z;
-
-            if (Input.GetKey(KeyCode.LeftShift))
-                curSpeed = 1f;
-
-            _anim.SetFloat("Speed", curSpeed);
-            _anim.SetFloat("VelocityX", velocityX);
-            _anim.SetFloat("VelocityZ", velocityZ);
+            
+            if(!Input.GetKey(KeyCode.LeftShift))
+                _anim.SetFloat("Speed", curSpeed);
+            
+            _anim.SetFloat("VelocityX", horizontal);
+            _anim.SetFloat("VelocityZ", vertical);
             _anim.SetBool("Aiming", false);
         }
     }
 
     protected override void UpdateAttack()
     {
-        if (CurrentCount == 0)
+        if (CurrentBulletCount == 0)
             return;
 
-        if(Input.GetMouseButtonDown(0))
+        if(Input.GetMouseButtonDown(0) && Input.GetMouseButton(1))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            if(Physics.Raycast(ray, out hit, Mathf.Infinity))
+            if(Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Wall")))
             {
                 GameObject go = Managers.Resource.Instantiate("PlayerBullet", _firePos.position, Quaternion.identity);
                 Bullet bullet = go.GetComponent<Bullet>();
                 bullet.Init(hit.point);
             }
+
+            CurrentBulletCount--;
             //∏∂√Î√— πﬂªÁ
         }
     }

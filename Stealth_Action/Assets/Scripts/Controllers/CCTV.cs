@@ -15,7 +15,7 @@ public class CCTV : MonoBehaviour
     float _minAngle = 0;
     float _maxAngle = 0;
     int _polygon = 15;
-    float _width = 3f;
+    float _width = 5f;
     float _height = 13f;
 
     private void Awake()
@@ -44,7 +44,18 @@ public class CCTV : MonoBehaviour
             float distance = Vector3.Distance(Managers.Game.GetPlayer().transform.position, hit.point);
 
             if (distance <= _width)
-                Debug.Log("D");
+            {
+                bool exist = GameObject.Find("UI_Warning");
+
+                if (!exist)
+                    Managers.UI.MakeProduction<UI_Warning>();
+                List<EnemyController> enemys = Managers.Game.EnemyList;
+
+                for (int i = 0; i < enemys.Count; i++)
+                {
+                    enemys[i].OnWarning(10);
+                }
+            }
         }
 
         Debug.DrawRay(_findPoint.position, (transform.forward + Vector3.down) * _height, Color.red, 0.1f);

@@ -18,30 +18,37 @@ public class Bullet : MonoBehaviour
     {
         GetComponent<Rigidbody>().isKinematic = true;
         GetComponent<Collider>().isTrigger = true;
-        _originPos = transform.position;
         Managers.Resource.Destroy(gameObject, 2f);
+        Destroy(gameObject, 3f);
     }
 
     void Update()
     {
-        float distance = (transform.position - _originPos).magnitude;
+        Vector3 dir = (_destPos - transform.position).normalized;
 
-        if(distance >= _range)
+        if (dir.sqrMagnitude <= 0.2f)
             Destroy(gameObject);
 
-        Vector3 dir = (_destPos - transform.position).normalized;
         transform.position += dir * _moveSpeed * Time.deltaTime;
         transform.LookAt(_destPos);
     }
 
+    bool _isHit;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("EnemyAround"))
-            other.GetComponentInParent<EnemyController>().OnWarning(5);
+        {
+            EnemyController enemy = other.GetComponentInParent<EnemyController>();
+            StartCoroutine(CoMeasure(enemy));
+            Debug.Log("Check");
+        }
 
         if(other.CompareTag("Enemy"))
         {
+            _isHit = true;
             other.GetComponent<EnemyController>().OnHit();
+            Managers.Resource.Instantiate("Sleep", other.transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
 
@@ -49,5 +56,23 @@ public class Bullet : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    IEnumerator CoMeasure(EnemyController enemy)
+    {
+        float currentTime = 0;
+
+        while (currentTime <= 0.75f)
+        {
+            currentTime += Time.deltaTime;
+
+            if (_isHit)
+                yield break;
+
+            yield return null;
+        }
+
+        enemy.OnWarning(5);
+        Destroy(gameObject);
     }
 }
