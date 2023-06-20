@@ -48,23 +48,25 @@ public class CameraController : MonoBehaviour
 
     void QuarterView()
     {
-        RaycastHit hit;
-        Vector3 dir = (_quarterviewPoint.position - _player.transform.position + _offset).normalized;
-        float distance = (_quarterviewPoint.position - _player.transform.position + _offset).magnitude;
+        //RaycastHit hit;
+        //Vector3 dir = (_quarterviewPoint.position - _player.transform.position + _offset).normalized;
+        //float distance = (_quarterviewPoint.position - _player.transform.position + _offset).magnitude;
 
-        if (Physics.Raycast(_player.transform.position, dir, out hit, distance, LayerMask.GetMask("Wall")))
-        {
-            float magnitude = (hit.point - _player.transform.position).magnitude;
-            Camera.main.transform.position = _player.transform.position + dir * magnitude;
-        }
-        else
-        {
-            Camera.main.transform.position = _quarterviewPoint.position;
-            Camera.main.transform.localRotation = Quaternion.Euler(20, 0, 0);
-        }
+        //if (Physics.Raycast(_player.transform.position, dir, out hit, distance, LayerMask.GetMask("Wall")))
+        //{
+        //    float magnitude = (hit.point - _player.transform.position).magnitude;
+        //    Camera.main.transform.position = _player.transform.position + dir * magnitude;
+        //}
+        //else
+        //{
+        //    Camera.main.transform.position = _quarterviewPoint.position;
+        //    Camera.main.transform.localRotation = Quaternion.Euler(20, 0, 0);
+        //}
 
-        Debug.DrawRay(_quarterviewPoint.position, dir * distance, Color.red, 1f);
+        //Debug.DrawRay(_quarterviewPoint.position, dir * distance, Color.red, 1f);
 
+        Camera.main.transform.position = _quarterviewPoint.position;
+        Camera.main.transform.localRotation = Quaternion.Euler(20, 0, 0);
         if (Input.GetKeyDown(KeyCode.R))
         {
             _mouseX = 0;
@@ -82,21 +84,24 @@ public class CameraController : MonoBehaviour
     
     void Aiming()
     {
-        RaycastHit hit;
-        Vector3 dir = (_aimingPoint.position - _player.transform.position + _offset).normalized;
-        float distance = (_aimingPoint.position - _player.transform.position + _offset).magnitude;
+        //RaycastHit hit;
+        //Vector3 dir = (_aimingPoint.position - _player.transform.position + _offset).normalized;
+        //float distance = (_aimingPoint.position - _player.transform.position + _offset).magnitude;
 
-        if (Physics.Raycast(_player.transform.position, dir, out hit, distance, LayerMask.GetMask("Wall")))
-        {
-            float magnitude = (hit.point - _player.transform.position).magnitude;
-            Camera.main.transform.position = _player.transform.position + dir * magnitude;
-        }
-        else
-        {
-            Camera.main.transform.position = _aimingPoint.position;
-            Camera.main.transform.localRotation = Quaternion.identity;
-        }
-        
+        //if (Physics.Raycast(_player.transform.position, dir, out hit, distance, LayerMask.GetMask("Wall")))
+        //{
+        //    float magnitude = (hit.point - _player.transform.position).magnitude;
+        //    Camera.main.transform.position = _player.transform.position + dir * magnitude;
+        //}
+        //else
+        //{
+        //    Camera.main.transform.position = _aimingPoint.position;
+        //    Camera.main.transform.localRotation = Quaternion.identity;
+        //}
+
+        Camera.main.transform.position = _aimingPoint.position;
+        Camera.main.transform.localRotation = Quaternion.identity;
+
         if (Input.GetMouseButtonUp(1))
         {
             _mode = Define.CameraMode.Quarterview;

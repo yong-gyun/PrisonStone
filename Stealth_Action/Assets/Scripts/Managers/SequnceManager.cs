@@ -77,6 +77,7 @@ public class SequnceManager
                         IsCinematic = false;
                         Managers.Game.GetPlayer().GetComponent<PlayerController>().IsActionable = false;
                         Cursor.lockState = CursorLockMode.None;
+                        Managers.Sound.Stop(Define.Sound.Bgm);
                     });
                     break;
                 case Define.SequnceNumber.Opening_2:
@@ -103,7 +104,7 @@ public class SequnceManager
         _currentSequnce = _root.GetChild((int)num).gameObject.GetComponent<PlayableDirector>();
         SequnceUI.SetActive(true);
         _currentSequnce.Play();
-
+        Managers.Sound.Play($"Bgm/Sequnce_{num}");
         CinematicCamera.gameObject.SetActive(true);
         _mainCamera.gameObject.SetActive(false);
         IsCinematic = true;

@@ -104,4 +104,6 @@ public class SoundManager
         _audioSources[(int)Define.Sound.Bgm].Stop();
         _audioSources[(int)Define.Sound.Effect].Stop();
     }
+
+    public void Stop(Define.Sound type) { _audioSources[(int)type].Stop(); }
 }

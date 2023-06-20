@@ -22,6 +22,7 @@ public class UI_GameOver : UI_Popup
         BindImage(typeof(Images));
         BindText(typeof(Texts));
 
+        Managers.Sound.Play("Bgm/Over", Define.Sound.Bgm);
         StartCoroutine(CoFade());
     }
 

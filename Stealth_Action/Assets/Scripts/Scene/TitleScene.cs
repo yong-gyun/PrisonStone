@@ -7,5 +7,6 @@ public class TitleScene : BaseScene
     protected override void Init()
     {
         Managers.UI.ShowSceneUI<UI_Title>();
+        Managers.Sound.Play("Bgm/Title", Define.Sound.Bgm);
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class UI_Loading : UI_Popup
+public class UI_Loading : UI_Scene
 {
     enum Texts
     {
@@ -26,12 +26,13 @@ public class UI_Loading : UI_Popup
 
     public void LoadScene(Define.Scene type)
     {
-        StartCoroutine(CoLoadScene(Managers.Scene.GetSceneName(type)));
         Managers.Sound.Stop();
+        StartCoroutine(CoLoadScene(Managers.Scene.GetSceneName(type)));
     }
 
     IEnumerator CoLoadScene(string sceneName)
     {
+        yield return new WaitForSeconds(0.25f);
         AsyncOperation op = SceneManager.LoadSceneAsync(sceneName);
         op.allowSceneActivation = false;
         float t = 0f;
@@ -64,7 +65,6 @@ public class UI_Loading : UI_Popup
                 {
                     percentText.text = $"{100}%";
                     op.allowSceneActivation = true;
-                    Managers.UI.ClosePopupUI();
                     yield break;
                 }
             }

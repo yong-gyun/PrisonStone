@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class SceneManagerEx
 {
     public BaseScene CurrentScene { get { return GameObject.FindObjectOfType<BaseScene>(); } }
+    public Define.Scene AsyncLoadSceneType { get; private set; }
 
     public void LoadScene(Define.Scene type)
     {
@@ -14,7 +15,8 @@ public class SceneManagerEx
 
     public void LoadSceneAsync(Define.Scene type)
     {
-        Managers.UI.ShowPopupUI<UI_Loading>().LoadScene(type);
+        LoadScene(Define.Scene.Loading);
+        AsyncLoadSceneType = type;
     }
 
     public string GetSceneName(Define.Scene type)
