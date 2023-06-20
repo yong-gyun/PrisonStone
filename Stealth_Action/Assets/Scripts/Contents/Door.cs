@@ -45,7 +45,7 @@ public class Door : MonoBehaviour
             _interactionUI = Managers.UI.MakeWorldSpaceUI<UI_Interaction>();
             _interactionUI.transform.position = offset + transform.position;
 
-            if (Managers.Game.KeyInventory[_type] > 0 || !_needKey)
+            if (Managers.Game.KeyInventory[(int)_type] > 0 || !_needKey)
             {
                 _interactionUI.SetInfo("¿­±â", false);
                 _interactionUI.OnInteractionHandler += OnOpen;
@@ -68,7 +68,7 @@ public class Door : MonoBehaviour
     public void OnOpen()
     {
         anim.SetBool("IsOpen", true);
-        Managers.Game.KeyInventory[_type]--;
+        Managers.Game.KeyInventory[(int)_type]--;
     }
 
     IEnumerator CoClose()

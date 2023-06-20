@@ -26,7 +26,7 @@ public class UI_Letter : UI_Popup
                 Managers.Sequnce.Play(Define.SequnceNumber.Opening_2);
                 Managers.Game.GetPlayer().GetComponent<PlayerController>().IsActionable = true;
             };
-            Managers.Game.KeyInventory[Define.CardKey.White]++;
+            Managers.Game.KeyInventory[(int)Define.CardKey.White]++;
             Managers.Game.GetPlayer().FindChild("Gun", true).SetActive(true);
 
             Managers.Game.GetPlayer().transform.position = new Vector3(0f, 1f, -42f);

@@ -14,13 +14,13 @@ public class GameManager
     }
 
     public List<EnemyController> EnemyList = new List<EnemyController>();
-    public Dictionary<Define.CardKey ,int> KeyInventory = new Dictionary<Define.CardKey, int>();
+    public List<int> KeyInventory = new List<int>();
 
     public void Init()
     {
         for (int i = 0; i < (int) Define.CardKey.MaxCount; i++)
         {
-            KeyInventory.Add((Define.CardKey) i, 0);
+            KeyInventory.Add(0);
         }
     }
 }

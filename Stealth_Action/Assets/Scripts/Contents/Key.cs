@@ -83,6 +83,7 @@ public class Key : MonoBehaviour
             _interactionUI.SetInfo("»πµÊ«œ±‚");
 
             _interactionUI.OnInteractionHandler += GetKey;
+            Debug.Log("Check");
         }
     }
 
@@ -96,7 +97,7 @@ public class Key : MonoBehaviour
 
     void GetKey()
     {
-        Managers.Game.KeyInventory[_type]++;
+        Managers.Game.KeyInventory[(int)_type]++;
         Managers.Resource.Destroy(_interactionUI.gameObject);
         Managers.Resource.Destroy(gameObject);
         Debug.Log(_type);
