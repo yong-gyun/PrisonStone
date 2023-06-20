@@ -16,7 +16,6 @@ public class UI_Warning : UI_Production
 
         base.Init();
         Managers.Sound.Play("Bgm/Siren", Define.Sound.Bgm);
-        Destroy(gameObject, 10f);
         StartCoroutine(CoWarning());
     }
 
@@ -28,7 +27,7 @@ public class UI_Warning : UI_Production
         float f_time = 1f;
         float time;
 
-        while (_currentTime >= 0)
+        while (_currentTime > 0)
         {
             time = 0f;
             
@@ -56,5 +55,6 @@ public class UI_Warning : UI_Production
         }
 
         Managers.Sound.Play("Bgm/Game", Define.Sound.Bgm);
+        Destroy(gameObject);
     }
 }

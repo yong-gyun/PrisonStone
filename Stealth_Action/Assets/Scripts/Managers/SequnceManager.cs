@@ -104,7 +104,7 @@ public class SequnceManager
         _currentSequnce = _root.GetChild((int)num).gameObject.GetComponent<PlayableDirector>();
         SequnceUI.SetActive(true);
         _currentSequnce.Play();
-        Managers.Sound.Play($"Bgm/Sequnce_{num}");
+        Managers.Sound.Play($"Bgm/Sequnce_{num}", Define.Sound.Bgm);
         CinematicCamera.gameObject.SetActive(true);
         _mainCamera.gameObject.SetActive(false);
         IsCinematic = true;
