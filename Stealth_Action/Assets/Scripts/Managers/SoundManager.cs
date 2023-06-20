@@ -21,7 +21,7 @@ public class SoundManager
             for (int i = 0; i < soundNames.Length - 1; i++)
             {
                 GameObject go = new GameObject { name = soundNames[i] };
-                _audioSources[i] = go.AddComponent<AudioSource>();
+                _audioSources[i] = go.GetOrAddComponent<AudioSource>();
                 go.transform.parent = root.transform;
             }
 
@@ -97,5 +97,11 @@ public class SoundManager
         }
 
         _audioClips.Clear();
+    }
+
+    public void Stop()
+    {
+        _audioSources[(int)Define.Sound.Bgm].Stop();
+        _audioSources[(int)Define.Sound.Effect].Stop();
     }
 }

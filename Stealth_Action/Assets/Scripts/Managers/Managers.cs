@@ -12,22 +12,14 @@ public class Managers : MonoBehaviour
     UIManager _ui = new UIManager();
     SequnceManager _sequnce = new SequnceManager();
     SoundManager _sound = new SoundManager();
+    SceneManagerEx _scene = new SceneManagerEx();
 
     public static GameManager Game { get { return Instance._game; } }
     public static ResourceManager Resource { get { return Instance._resource; } }
     public static UIManager UI { get { return Instance._ui; } }
     public static SequnceManager Sequnce { get {  return Instance._sequnce; } }
     public static SoundManager Sound { get { return Instance._sound; } }
-    
-    static Transform _camRoot;
-    
-    public static Transform CamRoot
-    {
-        get
-        {
-            return _camRoot;
-        }
-    }
+    public static SceneManagerEx Scene { get { return Instance._scene; } }
 
     void Start()
     {
@@ -49,12 +41,13 @@ public class Managers : MonoBehaviour
             s_instance = go.GetComponent<Managers>();
             s_instance._game.Init();
             s_instance._sound.Init();
-            _camRoot = Camera.main.transform.root;
+
+            Object.DontDestroyOnLoad(go);
         }
     }
 
     public static void Clear()
     {
-
+        
     }
 }

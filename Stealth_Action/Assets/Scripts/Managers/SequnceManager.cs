@@ -39,6 +39,7 @@ public class SequnceManager
     UI_Sequnce _sequnceUI;
     Camera _cinematicCam;
     Camera _mainCamera;
+    Transform _camRoot;
 
     public Camera CinematicCamera 
     { 
@@ -94,6 +95,7 @@ public class SequnceManager
 
         _mainCamera = Camera.main;
         _cinematicCam = GameObject.Find("@CinematicCam").GetComponent<Camera>();
+        _camRoot = _mainCamera.transform.root;
     }
 
     public void Play(Define.SequnceNumber num)
@@ -106,7 +108,7 @@ public class SequnceManager
         _mainCamera.gameObject.SetActive(false);
         IsCinematic = true;
 
-        Managers.CamRoot.GetComponent<CameraController>().enabled = false;
+        _camRoot.GetComponent<CameraController>().enabled = false;
         Managers.Game.GetPlayer().GetComponent<Rigidbody>().isKinematic = true;
     }
 
@@ -117,6 +119,6 @@ public class SequnceManager
         CinematicCamera.gameObject.SetActive(false);
         _mainCamera.gameObject.SetActive(true);
         Managers.Game.GetPlayer().GetComponent<Rigidbody>().isKinematic = false;
-        Managers.CamRoot.GetComponent<CameraController>().enabled = true;
+        _camRoot.GetComponent<CameraController>().enabled = true;
     }
 }

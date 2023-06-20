@@ -12,6 +12,7 @@ public class SequnceEvent : MonoBehaviour
         if (OnSequnceEventHandler != null)
         {
             OnSequnceEventHandler.Invoke();
+            Debug.Log("Check");
         }
     }
 }

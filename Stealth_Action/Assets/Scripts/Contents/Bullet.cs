@@ -41,7 +41,6 @@ public class Bullet : MonoBehaviour
         {
             EnemyController enemy = other.GetComponentInParent<EnemyController>();
             StartCoroutine(CoMeasure(enemy));
-            Debug.Log("Check");
         }
 
         if(other.CompareTag("Enemy"))

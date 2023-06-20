@@ -49,7 +49,6 @@ public class Door : MonoBehaviour
             {
                 _interactionUI.SetInfo("¿­±â", false);
                 _interactionUI.OnInteractionHandler += OnOpen;
-                Debug.Log(Managers.Game.KeyInventory[_type]);
                 return;
             }
 

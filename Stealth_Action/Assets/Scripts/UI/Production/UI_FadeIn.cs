@@ -17,7 +17,6 @@ public class UI_FadeIn : UI_Production
     protected override void Init()
     {
         base.Init();
-
         BindImage(typeof(Images));
         StartCoroutine(CoFade());
     }
@@ -25,7 +24,7 @@ public class UI_FadeIn : UI_Production
     IEnumerator CoFade()
     {
         Image img = GetImage((int)Images.Image);
-        float f_time = 4f;
+        float f_time = 2f;
         float t = 0;
 
         while (img.color.a < 1f)

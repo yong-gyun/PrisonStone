@@ -10,6 +10,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] Transform _aimingPoint;
     [SerializeField] Transform _quarterviewPoint;
     [SerializeField] Define.CameraMode _mode;
+    Vector3 _offset;
     Transform _player;
 
     void Start()
@@ -19,6 +20,8 @@ public class CameraController : MonoBehaviour
 
         _quarterviewPoint = transform.Find("QuarterviewPoint");
         _aimingPoint = transform.Find("AimingPoint");
+        Vector3 delta = Vector3.up;
+        _offset = delta * _player.GetComponent<Collider>().bounds.size.y / 2;
     }
 
     void LateUpdate()
@@ -45,10 +48,24 @@ public class CameraController : MonoBehaviour
 
     void QuarterView()
     {
-        Camera.main.transform.position = _quarterviewPoint.position;
-        Camera.main.transform.localRotation = Quaternion.Euler(20, 0, 0);
+        RaycastHit hit;
+        Vector3 dir = (_quarterviewPoint.position - _player.transform.position + _offset).normalized;
+        float distance = (_quarterviewPoint.position - _player.transform.position + _offset).magnitude;
 
-        if(Input.GetKeyDown(KeyCode.R))
+        if (Physics.Raycast(_player.transform.position, dir, out hit, distance, LayerMask.GetMask("Wall")))
+        {
+            float magnitude = (hit.point - _player.transform.position).magnitude;
+            Camera.main.transform.position = _player.transform.position + dir * magnitude;
+        }
+        else
+        {
+            Camera.main.transform.position = _quarterviewPoint.position;
+            Camera.main.transform.localRotation = Quaternion.Euler(20, 0, 0);
+        }
+
+        Debug.DrawRay(_quarterviewPoint.position, dir * distance, Color.red, 1f);
+
+        if (Input.GetKeyDown(KeyCode.R))
         {
             _mouseX = 0;
         }
@@ -59,24 +76,26 @@ public class CameraController : MonoBehaviour
             _crosshair = Managers.UI.MakeProduction<UI_Crosshair>();
             _crosshair.OnShow();
         }
-
-        //RaycastHit hit;
-        //float magnitude = (transform.position - _player.transform.position).magnitude;
-        //if (Physics.Raycast(_player.transform.position, _quarterviewPoint.position.normalized, out hit, magnitude, LayerMask.GetMask("Wall")))
-        //{
-        //    float distance = (hit.point - _player.transform.position).magnitude * 0.8f;
-        //    Camera.main.transform.position =  _player.transform.position + _quarterviewPoint.position.normalized * distance;
-        //}
-
-        //Debug.DrawRay(_player.transform.position, _quarterviewPoint.position.normalized * magnitude, Color.red, 0.1f);
     }
 
     UI_Crosshair _crosshair;
     
     void Aiming()
     {
-        Camera.main.transform.position = _aimingPoint.position;
-        Camera.main.transform.localRotation = Quaternion.identity;
+        RaycastHit hit;
+        Vector3 dir = (_aimingPoint.position - _player.transform.position + _offset).normalized;
+        float distance = (_aimingPoint.position - _player.transform.position + _offset).magnitude;
+
+        if (Physics.Raycast(_player.transform.position, dir, out hit, distance, LayerMask.GetMask("Wall")))
+        {
+            float magnitude = (hit.point - _player.transform.position).magnitude;
+            Camera.main.transform.position = _player.transform.position + dir * magnitude;
+        }
+        else
+        {
+            Camera.main.transform.position = _aimingPoint.position;
+            Camera.main.transform.localRotation = Quaternion.identity;
+        }
         
         if (Input.GetMouseButtonUp(1))
         {
